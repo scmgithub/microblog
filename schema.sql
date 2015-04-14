@@ -26,8 +26,8 @@ CREATE TABLE tags (
 	micro_post_id INTEGER
 );
 
-DROP TABLE IF EXISTS maillist;
-CREATE TABLE maillist (
+DROP TABLE IF EXISTS mail_list;
+CREATE TABLE mail_list (
 	id INTEGER PRIMARY KEY,
 	email TEXT,
 	name TEXT
