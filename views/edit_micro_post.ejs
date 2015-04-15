@@ -1,0 +1,11 @@
+<%include partials/header %>
+	<h3>Update "<%= thisMicroPost.title %>" here:</h3>
+	<form method="POST" action="/micro_post/<%= thisMicroPost.id %>?_method=PUT">
+		Title:&nbsp;<input type="text" name="title" value="<%= thisMicroPost.title %>" required><br><br>
+		Body:<br><textarea rows="10" cols="50" name="body" placeholder="" wrap="virtual" required><%= thisMicroPost.body %></textarea><br><br>
+FIX ME!!! Optionally, edit author, snippets, tags, stickiness here.<br><br>
+		<button>Update Post</button>
+	</form><br><br>
+	<small><a href="/micro_post/<%= thisMicroPost.id%>" method="GET">Or, Cancel this update and go back.</a><br>
+	<a href="/microblog" method="GET">Or go back Home.</a></small>
+<% include partials/footer %>

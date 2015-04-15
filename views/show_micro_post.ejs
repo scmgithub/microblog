@@ -1,0 +1,23 @@
+<% include partials/header %>
+	<h2><%= thisMicroPost.title %></h2>
+
+	<p><%= thisMicroPost.body %></p>
+	
+	<p>
+	<% if (thisMicroPost.author) { %>
+		Author: <%= thisMicroPost.author %>
+	<% } else { %>
+		This post has no author.
+	<% } %>
+	</p>
+
+	<p>
+	FIX ME!!!:  Gotta add tags and snippets here!
+	</p>
+ 
+	<a href="/microblog">Go home here.</a><br><br>
+	<a href="/micro_post/<%= thisMicroPost.id %>/edit">Update this post here</a><br><br>
+	<form method="POST" action="/micro_post/<%= thisMicroPost.id %>?_method=DELETE">
+		<button>Delete this post</button>
+	</form>
+<% include partials/footer %>
