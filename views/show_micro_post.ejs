@@ -1,13 +1,12 @@
 <% include partials/header %>
 	<h2><%= thisMicroPost.title %></h2>
 
-	<p><%= thisMicroPost.body %></p>
-	
-	<p>
+  	<p><%- thisMicroPost.body %></p>
+ 	<p>
 	<% if (thisMicroPost.author) { %>
 		Author: <%= thisMicroPost.author %>
 	<% } else { %>
-		This post has no author.
+		<small>This post has no author.</small>
 	<% } %>
 	</p>
 

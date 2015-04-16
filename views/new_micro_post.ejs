@@ -1,15 +1,12 @@
 <% include partials/header %>
 	<h1>Add a Post!</h1>
-dump authors:<br>
-<%=authors%><br>
+
 	<form action="/microblog" method="POST">
 		<input type="text" name="title" placeholder="Post's title goes here" required><br><br>
-		<textarea rows="10" cols="50" name="body" placeholder="Post's body goes here" wrap="virtual" required></textarea><br><br>
-
-		<input type="text" name="author" placeholder="author's name (optional)"><br><br>
+		<textarea rows="10" cols="50" name="body" placeholder="Post's body goes here" wrap="hard" required></textarea><br><br>
 		
 		<p>Optionally, add an existing Author's name:<br>
-		<select name="author">
+		<select name="author_id">
 			<% Object.keys(authors).forEach(function(key) { %> 
 				<option value="<%= authors[key].id %>"><%= authors[key].name %></option>
 			<% }) %>

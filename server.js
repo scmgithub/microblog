@@ -23,6 +23,9 @@ app.get('/', function(req, res) {
 	res.redirect('/microblog');
 });
 
+// provide access to static files (like css files)
+app.use(express.static('public'));
+
 //show all micro_posts
 //  spec says this route should be called "/feed"
 app.get('/feed', function(req, res) {
@@ -36,12 +39,13 @@ app.get('/microblog', function(req, res) {
 		if(err) {
 			throw err;
 		}
+		console.log("Sticky:");
 		console.log(rows);
 		db.all("select * from micro_posts where sticky_until is null order by id", function(err, rows) {
 			if(err) {
 				throw err;
 			}
-			console.log(rows);
+//			console.log(rows);
 			res.render('index.ejs', { micro_posts : rows });
 		});
 	});
@@ -50,9 +54,10 @@ app.get('/microblog', function(req, res) {
 //show individual micro_post
 app.get('/micro_post/:id', function(req, res) {
 	//get micro_post id from url, set thisMicroPost to appropriate post
+
 	db.get("select * from micro_posts where id = ?", parseInt(req.params.id), function(err, row) {
         if(err) { 
-            throw err; 
+            throw err;
         }
 		res.render('show_micro_post.ejs', { thisMicroPost : row });
 //		res.render('show_micro_post.ejs', { thisMicroPost : row }, { tags : tagRows}, { snippets : snippetRows } );
@@ -71,7 +76,7 @@ app.get('/micro_posts/new', function(req, res) {
 		} else {
 			fakeName = "select an author";
 		}
-		authorRows.unshift({ id: 0, name: fakeName});
+		authorRows.unshift({ id: 0, name: fakeName });
 console.log("AUTHORROWS:");
 console.log(authorRows)
 console.log(":AUTHORROWS");
@@ -83,8 +88,17 @@ console.log(":AUTHORROWS");
 
 //create a micro_post
 app.post('/microblog', function(req, res) {
+	console.log("IN ADD POST:");
+	console.log(req.body);
+	console.log(":IN ADD POST");
+// author_id should be >0 and newAuthor should be empty, or author_id should be zero (invalid) and newAuthor should be nonempty
+//  if there's a new author, add him to the author table
+
+	// handle spaces and newlines in body
+	var processed_body = req.body.body.replace(/[\n\r]{1,2}/g,"<br>").replace(/\s/g,"&nbsp;");
+
 	// save the new micro_post to the db
-	db.run("insert into micro_posts (title, body, author_id, sticky_until) values (?, ?, ?, ?)", req.body.title, req.body.body, req.body.author_id, req.body.sticky_until, function(err) {
+	db.run("insert into micro_posts (title, body, author_id, sticky_until) values (?, ?, ?, ?)", req.body.title, processed_body, req.body.author_id, req.body.sticky_until, function(err) {
 		if(err) { 
 			throw err; 
 		}
