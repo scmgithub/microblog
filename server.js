@@ -80,25 +80,40 @@ app.get('/micro_posts/new', function(req, res) {
 console.log("AUTHORROWS:");
 console.log(authorRows)
 console.log(":AUTHORROWS");
-//process.exit();
-//		res.render('new_micro_post.ejs');
 		res.render('new_micro_post.ejs', { authors : authorRows });
 	});
 });
 
 //create a micro_post
 app.post('/microblog', function(req, res) {
-	console.log("IN ADD POST:");
-	console.log(req.body);
-	console.log(":IN ADD POST");
-// author_id should be >0 and newAuthor should be empty, or author_id should be zero (invalid) and newAuthor should be nonempty
-//  if there's a new author, add him to the author table
+	// author_id should be > 0 and newAuthor should be empty, 
+	//   or author_id should be zero (invalid) and newAuthor should be nonempty
+	var processed_auth_id = req.body.author_id;
+	if (processed_auth_id > 0 && req.body.newAuthor) {  // this should not happen because of client-side validation
+		console.log("Weirdness in create post:  user specified two authors.");
+	}
+
+	//  if there's a new author, add him to the author table
+	if (req.body.newAuthor) {
+		db.run("insert into authors (name) values (?)", req.body.newAuthor, function(err) {
+			if(err) { 
+				throw err; 
+			}
+			// now we need his id
+			db.get("select id from authors where name = ?", req.body.newAuthor, function(err, row) {
+				if (err) {
+					throw err;
+				}
+				processed_auth_id = row;
+			});
+    	});
+	}
 
 	// handle spaces and newlines in body
 	var processed_body = req.body.body.replace(/[\n\r]{1,2}/g,"<br>").replace(/\s/g,"&nbsp;");
 
 	// save the new micro_post to the db
-	db.run("insert into micro_posts (title, body, author_id, sticky_until) values (?, ?, ?, ?)", req.body.title, processed_body, req.body.author_id, req.body.sticky_until, function(err) {
+	db.run("insert into micro_posts (title, body, author_id, sticky_until) values (?, ?, ?, ?)", req.body.title, processed_body, processed_auth_id, req.body.sticky_until, function(err) {
 		if(err) { 
 			throw err; 
 		}

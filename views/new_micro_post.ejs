@@ -1,21 +1,40 @@
 <% include partials/header %>
+	<script>
+		function validate() {
+			var existingAuthor = document.getElementById("existingAuthor");
+			var newAuthor = document.getElementById("newAuthor");
+
+			if (existingAuthor.value > 0 && newAuthor.value) {
+				newAuthor.focus();
+				alert("Please provide a new author, or an existing author, or neither, but not both.");
+				return false;
+			} else {
+				return true;
+			}
+		}
+	</script>
 	<h1>Add a Post!</h1>
 
-	<form action="/microblog" method="POST">
+	<form action="/microblog" method="POST" onsubmit="return validate()">
 		<input type="text" name="title" placeholder="Post's title goes here" required><br><br>
 		<textarea rows="10" cols="50" name="body" placeholder="Post's body goes here" wrap="hard" required></textarea><br><br>
-		
-		<p>Optionally, add an existing Author's name:<br>
-		<select name="author_id">
-			<% Object.keys(authors).forEach(function(key) { %> 
-				<option value="<%= authors[key].id %>"><%= authors[key].name %></option>
-			<% }) %>
-		</select></p>
-		Or, add a new Author (or don't):<br>
-		<input type="text" name="newAuthor" placeholder="new author's name"><br><br>
+
+		<% if (Object.keys(authors).length > 1) { // yes, > 1.  We have a "fake" author with id=0. %>
+			<p>Optionally, add an existing Author&apos;s name:<br>
+			<select id="existingAuthor" name="author_id">
+				<% Object.keys(authors).forEach(function(key) { %> 
+					<option value="<%= authors[key].id %>"><%= authors[key].name %></option>
+				<% }) %>
+			</select></p>
+			Or, add a new Author (or don&apos;t):<br>
+		<% } else { %>
+			Optionally, add an Author:<br>
+		<% } %>
+
+		<input type="text" id="newAuthor" name="newAuthor" placeholder="new author's name"><br><br>
 
 		<input type="text" name="sticky_until" placeholder="stickiness thing goes here" disabled="disabled"><br><br>
-		<button>Create Post</button>
+		<button type="submit">Create Post</button>
 	</form><br><br>
 	<small><a href="/microblog" method="GET">Cancel creation, take me back home.</a></small>
 <% include partials/footer %>
