@@ -10,7 +10,9 @@ line5
 
 
 line8(end)", null, null),
-	("body with parsed whitespace","line1<br>line2<br>line3spaces->&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<-spaces<br><br>line5<br><br><br>line8(end)", null, null);
+	("body with parsed whitespace","line1<br>line2<br>line3spaces->&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<-spaces<br><br>line5<br><br><br>line8(end)", null, null),
+	("Has an author Title", "Has an author Body", 2, null),
+	("Has no author Title", "Has no author Body", 0, null);
 
 insert into authors (name) values
 	("Author Name1"),

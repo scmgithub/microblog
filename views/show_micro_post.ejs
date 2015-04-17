@@ -3,8 +3,8 @@
 
   	<p><%- thisMicroPost.body %></p>
  	<p>
-	<% if (thisMicroPost.author) { %>
-		Author: <%= thisMicroPost.author %>
+	<% if (author.name) { %>
+		Author: <%= author.name %>
 	<% } else { %>
 		<small>This post has no author.</small>
 	<% } %>

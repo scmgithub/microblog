@@ -1,10 +1,42 @@
 <%include partials/header %>
+	<script>
+		function validate() {
+			var existingAuthor = document.getElementById("existingAuthor");
+			var newAuthor = document.getElementById("newAuthor");
+
+			if (existingAuthor.value > 0 && newAuthor.value) {
+				newAuthor.focus();
+				alert("Please provide a new author, or an existing author, or neither, but not both.");
+				return false;
+			} else {
+				return true;
+			}
+		}
+	</script>
 	<h3>Update "<%= thisMicroPost.title %>" here:</h3>
-	<form method="POST" action="/micro_post/<%= thisMicroPost.id %>?_method=PUT">
+
+	<form method="POST" action="/micro_post/<%= thisMicroPost.id %>?_method=PUT" onsubmit="return validate()">
 		Title:&nbsp;<input type="text" name="title" value="<%= thisMicroPost.title %>" required><br><br>
-		Body:<br><textarea rows="10" cols="50" name="body" placeholder="" wrap="virtual" required><%= thisMicroPost.body %></textarea><br><br>
-FIX ME!!! Optionally, edit author, snippets, tags, stickiness here.<br><br>
-		<button>Update Post</button>
+		Body:<br><textarea rows="10" cols="50" name="body" placeholder="" wrap="virtual" required><%= thisMicroPost.body.replace(/&nbsp;/g, " ").replace(/<br>/g,"\n") %></textarea><br><br>
+		<% if (Object.keys(authors).length > 1) { // yes, > 1.  We have a "fake" author with id=0. %>
+			<p>Optionally, add an existing Author&apos;s name:<br>
+			<select id="existingAuthor" name="author_id">
+				<% Object.keys(authors).forEach(function(key) { %> 
+					<option value="<%= authors[key].id %>"<%if (authors[key].id === thisMicroPost.author_id) { %> selected<% } %>><%= authors[key].name %></option>
+				<% }) %>
+			</select></p>
+			Or, add a new Author (or don&apos;t):<br>
+		<% } else { %>
+			Optionally, add an Author:<br>
+		<% } %>
+
+		<input type="text" id="newAuthor" name="newAuthor" placeholder="new author's name"><br><br>
+
+		<input type="text" name="sticky_until" placeholder="stickiness thing goes here" disabled="disabled"><br><br>
+
+
+FIX ME!!! Optionally edit snippets, tags, stickiness here.<br><br>
+		<button type="submit">Create Post</button>
 	</form><br><br>
 	<small><a href="/micro_post/<%= thisMicroPost.id%>" method="GET">Or, Cancel this update and go back.</a><br>
 	<a href="/microblog" method="GET">Or go back Home.</a></small>
