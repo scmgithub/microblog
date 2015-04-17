@@ -1,4 +1,5 @@
 //app requirements
+var secrets = require('./secrets.json');
 var express = require('express')
 var app = express();
 // set templating engine
@@ -224,6 +225,6 @@ app.delete('/micro_post/:id', function(req, res) {
 	res.redirect('/microblog');
 });
 
-var port = 80;  //fancy hosting!
+var port = secrets['port'];  //fancy hosting!
 app.listen(port);
 console.log('Listening on port '+port);
