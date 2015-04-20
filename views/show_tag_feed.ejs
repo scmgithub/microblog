@@ -1,0 +1,9 @@
+<% include partials/header %>
+	<h2>Posts with tag <%= tag %></h2>
+	<ul>
+		<% Object.keys(posts).forEach(function(key) { %> 
+			<li><div><a href="/micro_post/<%=posts[key].id %>"><%= posts[key].title %></a></div></li>
+		<% }); %>  
+	</ul>
+	<br><br><small><a href="/microblog" method="GET">Go back Home.</a></small>
+<% include partials/footer %>

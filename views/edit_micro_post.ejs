@@ -31,12 +31,21 @@
 		<% } %>
 
 		<input type="text" id="newAuthor" name="newAuthor" placeholder="new author's name"><br><br>
+		Add (edit) a <strong>comma, separated, list</strong> of tags for this post here (if you want):<br>
+		
+		<% if (tags.length > 0) { 
+			var tlist = "";
+			for (var i=0; i<tags.length; i++) { tlist += tags[i].name+","; }
+			tlist=tlist.replace(/,$/,""); %>
+			<input type="text" id="tags" name="tags" value="<%=tlist%>"><br><br>
+		<% } else { %>
+			<input type="text" id="tags" name="tags" placeholder="tag list here"><br><br>
+		<% } %>
 
-		<input type="text" name="sticky_until" placeholder="stickiness thing goes here" disabled="disabled"><br><br>
+		Add a link (as a snippet) to this post here:
+		<input type="text" id="snippet" name="snippet" placeholder="url goes here"><br><br>
 
-
-FIX ME!!! Optionally edit snippets, tags, stickiness here.<br><br>
-		<button type="submit">Create Post</button>
+		<button type="submit">Submit Changes</button>
 	</form><br><br>
 	<small><a href="/micro_post/<%= thisMicroPost.id%>" method="GET">Or, Cancel this update and go back.</a><br>
 	<a href="/microblog" method="GET">Or go back Home.</a></small>

@@ -5,5 +5,37 @@
 			<li><div><a href="/micro_post/<%=micro_posts[key].id %>"><%= micro_posts[key].title %></a></div></li>
 		<% }) %>  
 	</ul>
-	<a href="/micro_posts/new">Make a new post here.</a>
+	<a href="/micro_posts/new">Make a new post here.</a><br>
+	<br>
+	<% if (Object.keys(authors).length > 0) { %>
+		<p>Or, choose an author to see the posts by that author:<br>
+		<form action="/authors/find" method="POST">
+			<select id="existingAuthor" name="author_id">
+				<% Object.keys(authors).forEach(function(key) { %> 
+					<option value="<%= parseInt(authors[key].id) %>"> <%= authors[key].name %></option>
+				<% }) %>
+			</select>
+			<button type="submit">Go</button>
+		</p>
+		</form>
+	<% } %>
+	<br>
+	<% if (Object.keys(tags).length > 0) { %>
+		<p>Or, choose an existing tag to see the posts with that tag:<br>
+		<form action="/tags/find" method="POST">
+			<select id="existingTag" name="tag_name">
+				<% Object.keys(tags).forEach(function(key) { %> 
+					<option value="<%= tags[key].name %>"> <%= tags[key].name %></option>
+				<% }) %>
+			</select>
+			<button type="submit">Go</button>
+		</p>
+		</form>
+	<% } %>
+	<br><p>Join our mailing list to be notified about new posts.</p>
+	<form action="/addmail" method="POST">
+		<input type="text" name="email" placeholder="email address here" required>
+		<input type="text" name="name" placeholder="your name" required><br><br>
+		<button type="submit">Add email</button>
+	</form>
 <% include partials/footer %>

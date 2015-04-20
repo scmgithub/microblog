@@ -9,9 +9,26 @@
 		<small>This post has no author.</small>
 	<% } %>
 	</p>
+	<p>
+	<% if (tags.length > 0) { %>
+		Tags associated with this post:<br>
+		<% for(var i=0; i<tags.length; i++) { %>
+			<%= tags[i].name %><br>
+		<% } %>
+	<% } else { %>
+		<small>This post has no tags.</small>
+	<% } %>
+	</p>
 
 	<p>
-	FIX ME!!!:  Gotta add tags and snippets here!
+	<% if (snippets.length > 0) { %>
+		Snippets associated with this post:<br>
+		<% for(var i=0; i<snippets.length; i++) { %>
+			<li><div><a href="<%= snippets[i].url %>">Snippet <%= i %></a></div></li>
+		<% } %>
+	<% } else { %>
+		<small>This post has no snippets.</small>
+	<% } %>
 	</p>
  
 	<a href="/microblog">Go home here.</a><br><br>
