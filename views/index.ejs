@@ -1,11 +1,15 @@
 <% include partials/header %>
 	<h1>Welcome to the MicroBlog</h1>
-	<p>Current Posts:</p>
-	<ul>
-		<% Object.keys(micro_posts).forEach(function(key){ %> 
-			<li><a href="/micro_post/<%=micro_posts[key].id %>"><%= micro_posts[key].title %></a></li>
-		<% }) %>  
-	</ul>
+	<% if (Object.keys(micro_posts).length < 1 ) { %>
+		<p>No posts yet.  Yours can be first!</p>
+	<% } else { %>
+		<p>Current Posts:</p>
+		<ul>
+			<% Object.keys(micro_posts).forEach(function(key){ %> 
+				<li><a href="/micro_post/<%=micro_posts[key].id %>"><%= micro_posts[key].title %></a></li>
+			<% }) %>  
+		</ul>
+	<% } %>
 	<a href="/micro_posts/new">Add a new post here.</a><br>
 	<br>
 	<% if (Object.keys(authors).length > 0) { %>
