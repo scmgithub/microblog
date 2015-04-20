@@ -37,5 +37,5 @@ CSS styling is not my bag.
 
 ## Live version
 
-  - The server is running at stevemcintosh.us.  (a.k.a. http://104.236.90.68:80)
+  - The server is running at http://www.stevemcintosh.us.  (a.k.a. http://104.236.90.68:80)
   		(Unless it isn't.)
