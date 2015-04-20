@@ -53,7 +53,7 @@ app.get('/microblog', function(req, res) {
 				if(authorErr) {
 					throw authorErr;
 				}
-				db.all("select * from tags", function (tagErr, tagRows) {
+				db.all("select distinct name from tags", function (tagErr, tagRows) {
 					if(tagErr) {
 						throw tagErr;
 					}
@@ -116,7 +116,7 @@ app.post('/tags/find', function(req, res) {
 		if (err) {
 			throw err;
 		}
-		console.log(rows);
+		//console.log(rows);
 		res.render('show_tag_feed.ejs', { posts : rows, tag : req.body.tag_name });
 	});
 });
