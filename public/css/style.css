@@ -7,3 +7,15 @@ p {
 h2 {
 	color: red;
 }
+
+h1 {
+	text-align: center;
+}
+
+ul {
+	list-style-type: none;
+}
+
+a:hover {
+	color: red;
+}

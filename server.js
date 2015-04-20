@@ -185,20 +185,22 @@ app.post('/microblog', function(req, res) {
 						if (err) {
 							throw err;
 						}
-						var email=new sendgrid.Email();
-						email.setFrom("scm.phub@gmail.com");
-						email.setSubject("New post on the MicroBlog");
-						email.setText('New post:  '+req.body.title);
-						for (var i=0; i<mailRows.length; i++) {
-							console.log("Emailing "+mailRows[i].name+" at "+mailRows[i].email+": "+req.body.title);
-							email.addTo(mailRows[i].email);
-						}
-						sendgrid.send(email, function(err, json) { 
-							if (err) {
-								return console.error(err);
+						if (mailRows.length > 0) {
+							var email=new sendgrid.Email();
+							email.setFrom("scm.phub@gmail.com");
+							email.setSubject("New post on the MicroBlog");
+							email.setText('New post:  '+req.body.title);
+							for (var i=0; i<mailRows.length; i++) {
+								console.log("Emailing "+mailRows[i].name+" at "+mailRows[i].email+": "+req.body.title);
+								email.addTo(mailRows[i].email);
 							}
-							console.log (json); 
-						});
+							sendgrid.send(email, function(err, json) { 
+								if (err) {
+									return console.error(err);
+								}
+								console.log (json); 
+							});
+						}
 					});
 
 					//go to /microblog so we can see our new micro_post
@@ -217,6 +219,7 @@ app.post('/microblog', function(req, res) {
 				if (err) {
 					throw err;
 				}
+				if (mailRows.length > 0) {
 					var email=new sendgrid.Email();
 					email.setFrom("scm.phub@gmail.com");
 					email.setSubject("New post on the MicroBlog");
@@ -231,6 +234,7 @@ app.post('/microblog', function(req, res) {
 						}
 						console.log (json); 
 					});
+				}
 			});
 
 			//go to /microblog so we can see our new micro_post

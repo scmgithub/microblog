@@ -1,14 +1,15 @@
 <% include partials/header %>
 	<h1>Welcome to the MicroBlog</h1>
+	<p>Current Posts:</p>
 	<ul>
 		<% Object.keys(micro_posts).forEach(function(key){ %> 
-			<li><div><a href="/micro_post/<%=micro_posts[key].id %>"><%= micro_posts[key].title %></a></div></li>
+			<li><a href="/micro_post/<%=micro_posts[key].id %>"><%= micro_posts[key].title %></a></li>
 		<% }) %>  
 	</ul>
-	<a href="/micro_posts/new">Make a new post here.</a><br>
+	<a href="/micro_posts/new">Add a new post here.</a><br>
 	<br>
 	<% if (Object.keys(authors).length > 0) { %>
-		<p>Or, choose an author to see the posts by that author:<br>
+		<p>List posts by  author:
 		<form action="/authors/find" method="POST">
 			<select id="existingAuthor" name="author_id">
 				<% Object.keys(authors).forEach(function(key) { %> 
@@ -19,9 +20,8 @@
 		</p>
 		</form>
 	<% } %>
-	<br>
 	<% if (Object.keys(tags).length > 0) { %>
-		<p>Or, choose an existing tag to see the posts with that tag:<br>
+		<p>List posts by tag:
 		<form action="/tags/find" method="POST">
 			<select id="existingTag" name="tag_name">
 				<% Object.keys(tags).forEach(function(key) { %> 
@@ -32,7 +32,7 @@
 		</p>
 		</form>
 	<% } %>
-	<br><p>Join our mailing list to be notified about new posts.</p>
+	<p>Join our mailing list to be notified about new posts.</p>
 	<form action="/addmail" method="POST">
 		<input type="text" name="email" placeholder="email address here" required>
 		<input type="text" name="name" placeholder="your name" required><br><br>
